@@ -1,0 +1,34 @@
+name: Minify Plugin
+permissions:
+  contents: write
+  pages: write 
+on:
+  push:
+    branches:
+    - main
+    
+jobs:
+  minify:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Auto Minify
+      uses: nizarmah/auto-minify@v2.1
+    - name: Auto committing minified files
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Github Action: Auto Minified JS and CSS files"
+        branch: ${{ github.ref }}
+    
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Purge JSdeliver
+      continue-on-error: true
+      uses: gacts/purge-jsdelivr-cache@v1
+      with: 
+        url: |
+          https://cdn.jsdelivr.net/gh/athlonstudio/library-webflow-gtm-helper@latest/src/main.js
+          https://cdn.jsdelivr.net/gh/athlonstudio/library-webflow-gtm-helper@latest/src/main.min.js
+          https://cdn.jsdelivr.net/gh/athlonstudio/library-webflow-gtm-helper@${{ github.ref_name }}/src/main.min.js
+
