@@ -1,7 +1,7 @@
-const cookieKey = document.currentScript.dataset.cookie;
+const cookieKey = document.currentScript.dataset.cookieKey;
 const cookiesApproved = document.cookie.split('; ').map((cookie) => cookie.includes(cookieKey) || cookie.includes(cookieKey)).includes(true);
-const GTMkey = document.currentScript.dataset.GTM;
-const GAkey = document.currentScript.dataset.GA;
+const GTMkey = document.currentScript.dataset.gtm;
+const GAkey = document.currentScript.dataset.ga;
 
 function enableGTM() {
   window['dataLayer'] = window['dataLayer']||[];
