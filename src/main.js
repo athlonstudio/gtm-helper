@@ -38,14 +38,16 @@ function initiateCookie() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  if(!cookiesApproved && cookieKey){
-      document.querySelector('[fs-cc="banner"]').classList.toggle('hide');
+  const cookieBanner = document.querySelector('[fs-cc="banner"]');
+  
+  if(!cookiesApproved && cookieKey && cookieBanner){
+      cookieBanner.classList.toggle('hide');
       document.querySelector('[fs-cc="close"]').addEventListener('click', initiateCookie);
   } else {
       enableGTM();
       enableGA();
-    if(cookieKey) {
-      document.querySelector('[fs-cc="banner"]').remove();
+    if(cookieKey && cookieBanner) {
+      cookieBanner.remove();
      }
   }
 
