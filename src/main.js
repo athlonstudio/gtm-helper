@@ -1,22 +1,8 @@
-var currentScript = document.currentScript;
-
-function initializeGTMHelper(currentScript) {
-  const cookieKey = currentScript.dataset.cookieKey;
+(() => {
+  const cookieKey = document.currentScript.dataset.cookieKey;
   const cookiesApproved = document.cookie.split('; ').map((cookie) => cookie.includes(`${cookieKey}=all`) || cookie.includes(`${cookieKey}=all`)).includes(true);
-  const GTMkey = currentScript.dataset.gtm;
-  const GAkey = currentScript.dataset.ga;
-  const cookieBanner = document.querySelector('[fs-cc="banner"]');
-  
-  if(!cookiesApproved && cookieKey && cookieBanner){
-      cookieBanner.classList.toggle('hide');
-      document.querySelector('[fs-cc="close"]').addEventListener('click', initiateCookie);
-  } else {
-      enableGTM();
-      enableGA();
-    if(cookieKey && cookieBanner) {
-      cookieBanner.remove();
-     }
-  }
+  const GTMkey = document.currentScript.dataset.gtm;
+  const GAkey = document.currentScript.dataset.ga;
   
   function enableGTM() {
     if(GTMkey) {
@@ -49,7 +35,22 @@ function initializeGTMHelper(currentScript) {
     
     enableGTM();
     enableGA();
+    }
+  
+  function initializeGTMHelper() {
+    const cookieBanner = document.querySelector('[fs-cc="banner"]');
+    
+    if(!cookiesApproved && cookieKey && cookieBanner){
+      cookieBanner.classList.toggle('hide');
+      document.querySelector('[fs-cc="close"]').addEventListener('click', initiateCookie);
+    } else {
+      enableGTM();
+      enableGA();
+    if(cookieKey && cookieBanner) {
+      cookieBanner.remove();
+     }
+    }
   }
-}
-
-document.addEventListener("DOMContentLoaded", () => initializeGTMHelper(currentScript));
+  
+  document.addEventListener("DOMContentLoaded", initializeGTMHelper);
+})();
