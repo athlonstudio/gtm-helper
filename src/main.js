@@ -1,8 +1,10 @@
-function initializeGTMHelper() {
-  const cookieKey = document.currentScript.dataset.cookieKey;
+var currentScript = document.currentScript;
+
+function initializeGTMHelper(currentScript) {
+  const cookieKey = currentScript.dataset.cookieKey;
   const cookiesApproved = document.cookie.split('; ').map((cookie) => cookie.includes(`${cookieKey}=all`) || cookie.includes(`${cookieKey}=all`)).includes(true);
-  const GTMkey = document.currentScript.dataset.gtm;
-  const GAkey = document.currentScript.dataset.ga;
+  const GTMkey = currentScript.dataset.gtm;
+  const GAkey = currentScript.dataset.ga;
   const cookieBanner = document.querySelector('[fs-cc="banner"]');
   
   if(!cookiesApproved && cookieKey && cookieBanner){
@@ -36,7 +38,6 @@ function initializeGTMHelper() {
     }
   }
   
-  
   function initiateCookie() {
     const exipiryDate = new Date();
     const monthInMilliseconds = 30 * 86400000;
@@ -51,5 +52,4 @@ function initializeGTMHelper() {
   }
 }
 
-
-document.addEventListener("DOMContentLoaded", initializeGTMHelper);
+document.addEventListener("DOMContentLoaded", () => initializeGTMHelper(currentScript));
