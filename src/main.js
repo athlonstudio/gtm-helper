@@ -8,9 +8,17 @@
     if(GTMkey) {
       window['dataLayer'] = window['dataLayer']||[];
       window['dataLayer'].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-      const location = document.getElementsByTagName('script')[0],elem=document.createElement('script'),dl='dataLayer'!='dataLayer'?'&l='+'dataLayer':'';
-      elem.async=true;elem.src='https://www.googletagmanager.com/gtm.js?id='+GTMkey+dl;
-      location.parentNode.insertBefore(elem,location);
+      const firstScript = document.getElementsByTagName('script')[0]
+      const elem = document.createElement('script');
+      const dl ='dataLayer'!='dataLayer'?'&l='+'dataLayer':'';
+      const noscriptElem = document.createElement('noscript');
+      noscriptElem.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTMkey}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+      
+      elem.async=true;
+      elem.src=`https://www.googletagmanager.com/gtm.js?id=${GTMkey+dl}`;
+      firstScript.parentNode.insertBefore(elem,firstScript);
+      document.body.prepend(noscriptElem)
     }
   }
   
