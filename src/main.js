@@ -52,4 +52,4 @@ function initializeGTMHelper() {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => initializeGTMHelper);
+document.addEventListener("DOMContentLoaded", initializeGTMHelper);
